@@ -24,11 +24,11 @@ Theme-Calendar
 ```
 
 ### 2 Prerequisites
+
 #### 2.1 install Thonny
 
 #### 2.2 install ESP32 firmware, refer here: http://docs.micropython.org/en/latest/esp32/tutorial/intro.html#esp32-intro
 
-#### 2.3 install ESP32 firmware, refer here: http://docs.micropython.org/en/latest/esp32/tutorial/intro.html#esp32-intro
 
 ### 3 Running Local
 Select main.py file and click run to check all function.
