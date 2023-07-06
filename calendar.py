@@ -1,5 +1,6 @@
 from globalVariable import GlobalVal
 
+YEAR = [2023, 2024, 2025, 2026, 2027, 2028]
 MONTH = [[ 1,  2,  3,  4,  5,  6,  7],
          [ 8,  9, 10, 11, 12,  0,  0]]
 DATE = [[ 1,  2,  3,  4,  5,  6,  7],
@@ -22,10 +23,11 @@ def get_weekday(year, month, day):
         return 7
 def get_today():
     real_time = GlobalVal.rtc.datetime()
-    print(real_time)
+#     print(real_time)
     year = real_time[0]
     month = real_time[1]
     day = real_time[2]
+    return year, month, day
 
 # if one day is weekend
 def is_weekend(year, month, day):
@@ -53,6 +55,12 @@ def total_day_of_month(year, month):
     else:
         return 0
 
+# choose which year
+def current_year_choose():
+    for i in range(6):
+        if GlobalVal.year == YEAR[i]:
+            GlobalVal.year_choose[i] = 1
+    
 # choose which month
 def current_month_choose(month):
     if month < 8:
@@ -76,7 +84,10 @@ def current_date_choose(year, month):
                 else:
                     str_date = str(DATE[i][j])
                 cur_day = str(year) + '-' + str_month + '-' + str_date
-                if cur_day in GlobalVal.holiday:                    #curent_day is public holiday
+                cur_date = get_today()
+                if year == cur_date[0] and month == cur_date[1] and DATE[i][j] == cur_date[2]:
+                    GlobalVal.date_choose[i][j] = 5                 #curent_day is today
+                elif cur_day in GlobalVal.holiday:                    #curent_day is public holiday
                     GlobalVal.date_choose[i][j] = 1
                 elif cur_day in GlobalVal.workday_for_holiday:      #curent_day is working day for toil
                     GlobalVal.date_choose[i][j] = 2
@@ -92,30 +103,35 @@ def current_weekday_choose(year, month, day):
 
 # current_day weather
 def current_weather_choose():
-    today_weather = '晴'
-    if today_weather == '晴':
+    if GlobalVal.today_weather == '晴':
         GlobalVal.weather_choose[0] = 1;
-    elif today_weather == '阴':
+    elif GlobalVal.today_weather == '阴':
         GlobalVal.weather_choose[1] = 1;
-    elif '云' in today_weather:
+    elif '云' in GlobalVal.today_weather:
         GlobalVal.weather_choose[2] = 1;
-    elif '雨' in today_weather:
+    elif '雨' in GlobalVal.today_weather:
         GlobalVal.weather_choose[3] = 1;
-    elif '雪' in today_weather:
+    elif '雾' in GlobalVal.today_weather:
         GlobalVal.weather_choose[4] = 1;
-    else:
+    elif '雪' in GlobalVal.today_weather:
         GlobalVal.weather_choose[5] = 1;
+    else:
+        GlobalVal.weather_choose[6] = 1;
 
 def calendar_choose(year, month, day):
 #     holiday_info(year)
+    current_year_choose()
     current_month_choose(month)
     current_date_choose(year, month)
     current_weekday_choose(year, month, day)
     current_weather_choose()
 
-    print("current month_choose is: ", GlobalVal.month_choose)
-    print("current date_choose is: ", GlobalVal.date_choose)
-    print("current weekday_choose is: ", GlobalVal.weekday_choose)
-    print("current weather_choose is: ", GlobalVal.weather_choose)
+def clear_choose():
+    GlobalVal.year_choose = [0 for i in range(6)]
+    GlobalVal.month_choose = [[0 for j in range(7)] for i in range(2)]
+    GlobalVal.date_choose = [[0 for j in range(7)] for i in range(5)]
+    GlobalVal.weekday_choose = [0 for i in range(7)]
+    GlobalVal.weather_choose = [0 for i in range(7)]
+    
     
 

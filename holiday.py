@@ -5,8 +5,6 @@ from globalVariable import GlobalVal
 
 def holiday_info(year):
     url = f'https://timor.tech/api/holiday/year/{year}/'
-    global str_response
-    global mid_data
     try:
         retry_times = 3
         while(retry_times > 0):
@@ -27,4 +25,10 @@ def holiday_info(year):
         print("workday_for_holiday info:", GlobalVal.workday_for_holiday)
     except:
         print("failed to get holiday info")
+
+def update_holiday():
+    if GlobalVal.need_update_holiday == 1:
+        holiday_info(GlobalVal.year)
+        print("start to get",  GlobalVal.year, "year holiday")
+        GlobalVal.need_update_holiday = 0
 
