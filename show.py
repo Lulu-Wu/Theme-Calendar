@@ -7,6 +7,7 @@ from globalVariable import GlobalVal
 def calendar_show(year, month, day):
     cur_date = get_today()
     #year
+    np[coordinate_map(0, 0)] = color.default_color()
     for j in range(1, 7):
         if GlobalVal.year_choose[j-1] == 1:
             np[coordinate_map(0, j)] = color.cur_year_color()

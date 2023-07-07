@@ -1,6 +1,6 @@
 import network
 
-#连接WIFI
+#connect WIFI
 def wifi_connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
